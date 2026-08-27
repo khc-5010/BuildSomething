@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Build Board — Build Something!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%23030c1a'/><path d='M5 7l6 5-6 5M13 17h6' stroke='%2396bee6' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#030c1a">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script src="data/builds.js"></script>
+<script src="js/app.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="logo" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#96bee6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 10 12 4 18"></polyline><line x1="12" y1="18" x2="20" y2="18"></line></svg>
+      <span class="logo-name">BUILD_SOMETHING!<span> //v1.5</span></span>
+    </a>
+    <nav class="topnav">
+      <a class="lbl" href="intake.html">New Build</a>
+      <a class="lbl" href="machine.html">Just Spin</a>
+      <a class="lbl" href="quests.html">Quest Log</a>
+      <a class="lbl here" href="board.html">The Board</a>
+      <a class="lbl" href="setup.html">Get Set Up</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;">
+    <div class="page-head" style="max-width:640px;">
+      <div class="lbl blue">The Build Board // shipped by students</div>
+      <h1>PROOF IT'S POSSIBLE.</h1>
+      <p class="page-sub" style="margin:0;">Every card started as a blank canvas and a person who'd never built anything. Median experience at kickoff: none whatsoever.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;padding-top:20px;">
+      <a class="btn btn-primary" href="#join">Get on the board
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+      </a>
+      <span class="lbl">The final quest of every build</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="board-grid" id="board-grid"></div>
+    <p class="note" style="text-align:center;margin-top:26px;">every entry here arrived as a pull request &mdash; ask your AI what that means, then have it walk you through yours. the first card is Mr. C's. beat it.</p>
+  </div>
+
+  <div class="wrap" id="join" style="margin-top:56px;">
+    <div class="panel corners" style="padding:30px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="lbl blue">Get on the board // the final quest</div>
+        <h2 class="disp" style="margin:0;font-size:24px;color:var(--bright);letter-spacing:0.03em;">SHIPPED? PROVE IT.</h2>
+        <p style="margin:0;font-size:13.5px;line-height:1.75;color:var(--muted2);max-width:760px;">The Board is a file in a GitHub repo, and you get on it the way real software gets made: a pull request. You don't need to know what that is &mdash; your AI does. Copy the prompt below, paste it into your AI coding tool, fill in your details, and it'll drive.</p>
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div style="display:flex;align-items:center;gap:14px;">
+              <span class="term-dots"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot on"></span></span>
+              <span class="lbl">BOARD_ENTRY_PROMPT.TXT</span>
+            </div>
+            <button class="btn btn-primary" style="padding:11px 22px;font-size:12px;" id="copy-board-prompt">Copy</button>
+          </div>
+          <pre id="board-prompt"></pre>
+        </div>
+        <p class="note" style="margin:0;">GitHub feeling like a lot right now? <a id="email-fallback" href="#">Email your entry to Mr. C</a> instead and he'll add it for you. But the PR is a resume line &mdash; take the PR.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">maintained by Mr. C &middot; not an official Penn State anything &middot; your AI does the typing &mdash; you do the thinking</footer>
+
+<script>
+(function () {
+  function bylineOf(b) {
+    if (b.role) { return (b.builder + " · " + b.role).toUpperCase(); }
+    var year = b.year ? " '" + b.year : "";
+    return (b.builder + " · " + (b.major || "") + year).toUpperCase();
+  }
+  function metaOf(b) {
+    var parts = [];
+    if (b.seed) { parts.push("FACULTY SEED"); }
+    if (b.days) { parts.push(String(b.days).toUpperCase()); }
+    if (b.tool) { parts.push(String(b.tool).toUpperCase()); }
+    if (b.semester) { parts.push(String(b.semester).toUpperCase()); }
+    return parts.join(" · ");
+  }
+  var grid = $("#board-grid");
+  var html = BUILDS.map(function (b) {
+    var liveUrl = b.self ? location.origin : b.live;
+    var codeUrl = b.self ? (String(SITE.repoUrl).indexOf("http") === 0 ? SITE.repoUrl : null) : b.code;
+    var links = "";
+    if (liveUrl) {
+      links += '<a href="' + liveUrl + '" target="_blank" rel="noopener">LIVE ' +
+        '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M20 4L10 14"></path></svg></a>';
+    }
+    if (codeUrl) {
+      links += '<a href="' + codeUrl + '" target="_blank" rel="noopener" style="color:var(--muted2);">CODE</a>';
+    }
+    return '<article class="card' + (b.seed ? " seeded" : "") + '">' +
+      (b.shot ? '<img class="card-thumb" src="' + b.shot + '" alt="Screenshot of ' + b.name + '" loading="lazy">' : bsThumb(b.name)) +
+      '<div class="card-body">' +
+        '<div class="card-name-row"><span class="card-name">' + b.name.toUpperCase() + "</span>" +
+          (b.seed ? '<span class="lbl amber" style="border:1px solid var(--amber-line);padding:4px 9px;">Faculty seed</span>' : "") +
+        "</div>" +
+        '<div class="card-blurb">' + b.blurb + "</div>" +
+        '<div class="builder-row"><span class="avatar">' + b.builder.trim().charAt(0).toUpperCase() + "</span>" +
+          '<span class="builder-name">' + bylineOf(b) + "</span></div>" +
+        '<div class="card-foot"><span class="card-meta">' + metaOf(b) + "</span>" +
+          '<span class="card-links">' + links + "</span></div>" +
+      "</div></article>";
+  }).join("");
+  grid.innerHTML = html;
+
+  var boardPrompt = [
+    "I finished a build and I want it on the Build Something! Build Board.",
+    "",
+    "THE BOARD: it's the data/builds.js file in this repo: " + SITE.repoUrl,
+    "MY JOB: get my project added via a real pull request. You drive the git parts and explain each one in a sentence as we go.",
+    "",
+    "THE STEPS:",
+    "1. Fork the repo (help me make a GitHub account first if I don't have one).",
+    "2. Add my entry to the TOP of the BUILDS array — the schema is documented at the top of data/builds.js. Real first name, no handles.",
+    "3. Optional but strong: add a screenshot to the shots/ folder (PNG or JPG, about 800px wide, named after my project) and set my entry's shot field to that path.",
+    "4. Commit, push, and open a pull request titled \"Board: [my project name]\".",
+    "5. While we wait for Mr. C to merge it, explain to me in two sentences what a pull request actually is.",
+    "",
+    "MY DETAILS (fill these into the entry):",
+    "· Project name: [NAME]",
+    "· One-liner: [WHAT IT DOES]",
+    "· First name: [FIRST NAME]",
+    "· Major + grad year: [e.g. MIS '27]",
+    "· How long it took: [e.g. 9 days]",
+    "· Tool I built with: [whatever you are]",
+    "· Semester I shipped: [e.g. Fall '26]",
+    "· Live URL: [https://...]",
+    "· Repo URL (optional): [https://github.com/...]"
+  ].join("\n");
+  $("#board-prompt").textContent = boardPrompt;
+  $("#copy-board-prompt").addEventListener("click", function () { bsCopy(this, boardPrompt); });
+  $("#email-fallback").href = "mailto:" + SITE.email + "?subject=" + encodeURIComponent("Board entry: [project name]") +
+    "&body=" + encodeURIComponent("Project name:\nOne-liner:\nFirst name:\nMajor + grad year:\nHow long it took:\nTool:\nLive URL:\nRepo URL (optional):");
+})();
+</script>
+</body>
+</html>

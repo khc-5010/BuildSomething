@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Idea Machine — Build Something!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%23030c1a'/><path d='M5 7l6 5-6 5M13 17h6' stroke='%2396bee6' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#030c1a">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script src="data/builds.js"></script>
+<script src="js/app.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="logo" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#96bee6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 10 12 4 18"></polyline><line x1="12" y1="18" x2="20" y2="18"></line></svg>
+      <span class="logo-name">BUILD_SOMETHING!<span> //v1.5</span></span>
+    </a>
+    <nav class="topnav">
+      <a class="lbl here" href="machine.html">The Idea Machine</a>
+      <a class="lbl" href="intake.html">Do the intake instead</a>
+      <a class="lbl" href="index.html">Abort to menu</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="text-align:center;padding-top:40px;">
+    <div class="lbl blue">The Idea Machine // no thoughts required</div>
+    <h1 class="disp" style="font-size:clamp(24px,4vw,34px);font-weight:700;color:var(--bright);letter-spacing:0.02em;margin:12px 0 0 0;">PULL. LOCK WHAT YOU LIKE. SPIN THE REST.</h1>
+    <div class="lbl" id="dossier-note" style="display:none;margin-top:12px;color:var(--blue);"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="machine panel corners">
+      <div class="reels" id="reels"></div>
+      <div style="display:flex;justify-content:center;margin-top:26px;">
+        <button class="btn btn-primary" id="pull" style="padding:19px 66px;font-size:15px;box-shadow:0 0 30px rgba(150,190,230,0.3);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"></path><polyline points="21 3 21 8 16 8"></polyline><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"></path><polyline points="3 21 3 16 8 16"></polyline></svg>
+          Pull the lever
+        </button>
+      </div>
+    </div>
+
+    <div class="readout panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <span class="lbl blue" id="combo-no">Combo No. 0000 &mdash; the readout</span>
+        <span class="lbl">Routes into your kickoff prompt</span>
+      </div>
+      <p class="readout-sentence" id="readout" style="margin:0;"></p>
+      <div style="display:flex;align-items:center;gap:14px;margin-top:6px;flex-wrap:wrap;">
+        <a class="btn btn-primary" href="prompt.html" id="start-build" style="padding:15px 30px;">
+          Start this build
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </a>
+        <button class="btn btn-ghost" id="reroll" style="padding:15px 26px;">Reroll the twist</button>
+      </div>
+    </div>
+
+    <p class="note" style="text-align:center;margin-top:24px;">the machine is the fun part &mdash; the prompt is the payload. every pull gets personalized with whatever you told the intake.</p>
+  </div>
+</main>
+
+<footer class="foot">maintained by Mr. C &middot; not an official Penn State anything &middot; your AI does the typing &mdash; you do the thinking</footer>
+
+<script>
+(function () {
+  var WHO = ["YOUR GROUP CHAT", "YOUR INTRAMURAL TEAM", "YOUR FANTASY LEAGUE", "YOUR STUDY GROUP", "YOUR DISCORD SERVER", "YOUR APARTMENT", "YOUR FAMILY TEXT THREAD", "YOUR TAILGATE CREW", "YOUR PROJECT TEAM", "THE CLUB YOU'RE IN", "EVERY COMMUTER STUDENT", "EVERY ERIE DRIVER", "YOUR FRIEND GROUP", "YOUR GYM CREW", "YOUR GAME NIGHT", "YOUR SHIFT SCHEDULE"];
+  var PAIN = ["CAN'T PICK WHERE TO EAT", "FORGETS EVERYTHING", "ARGUES ABOUT NOTHING", "NEVER SPLITS THE BILL RIGHT", "LOSES EVERY RECEIPT", "MISSES EVERY DEADLINE", "CAN'T SCHEDULE ANYTHING", "DROWNS IN SCREENSHOTS", "ALWAYS LOSES THE AUX FIGHT", "NEVER KNOWS WHO OWES WHAT", "CAN'T AGREE ON A MOVIE", "PLANS EVERYTHING TOO LATE", "KEEPS DOUBLE-BOOKING ITSELF", "HOARDS 400 OPEN TABS", "NEVER REMEMBERS WHOSE TURN IT IS", "ASKS FOR THE WIFI EVERY WEEK"];
+  var TWIST = ["WITH A LEADERBOARD", "WITH BRACKET-STYLE VOTING", "AND IT TALKS TRASH", "WITH STREAKS AND PUBLIC SHAME", "AS A ONE-BUTTON APP", "WITH A LIVE COUNTDOWN", "AND IT JUST DECIDES FOR EVERYONE", "WITH WEEKLY REPORT CARDS", "AND IT KEEPS RECEIPTS", "WITH A HALL OF FAME", "AS A MAP", "WITH BADGES NOBODY ASKED FOR", "WITH AN UNDISPUTED RANKING", "AND IT REMEMBERS FOREVER", "WITH A DAILY VERDICT", "AS A TINY GAME"];
+
+  /* If the intake has been done in this browser, their life leaks into the reels. */
+  var dossier = bsStore.get("bs_dossier");
+  var personalized = false;
+  if (dossier) {
+    var properNouns = function (text) {
+      var words = String(text || "").split(/\s+/), out = [];
+      for (var w = 1; w < words.length; w++) {
+        var word = words[w].replace(/[^A-Za-z']/g, "");
+        if (/^[A-Z][a-z]{2,}$/.test(word) && !/[.!?]$/.test(words[w - 1]) && out.indexOf(word) === -1) { out.push(word); }
+      }
+      return out;
+    };
+    properNouns((dossier.timeText || "") + " " + (dossier.annoy || "") + " " + (dossier.track || "")).slice(0, 2).forEach(function (noun) {
+      WHO.unshift("YOUR " + noun.toUpperCase() + " CREW");
+      personalized = true;
+    });
+    if (dossier.major && dossier.major.trim() && dossier.major.trim().length <= 18) {
+      WHO.unshift("EVERY " + dossier.major.trim().toUpperCase() + " MAJOR");
+      personalized = true;
+    }
+    var trackBit = (dossier.track || "").trim().replace(/[.!?]+$/, "");
+    if (trackBit && trackBit.length <= 26) {
+      TWIST.unshift("AND IT TRACKS " + trackBit.toUpperCase());
+      personalized = true;
+    }
+  }
+
+  var REELS = [
+    { label: "Who", items: WHO },
+    { label: "The pain", items: PAIN },
+    { label: "The twist", items: TWIST }
+  ];
+  var idx = personalized ? [0, 0, 0] : [1, 0, 1];
+  var locked = [false, false, false];
+  var spinning = false;
+
+  if (personalized) {
+    var noteEl = document.getElementById("dossier-note");
+    noteEl.textContent = "Dossier detected — your life is in the reels";
+    noteEl.style.display = "block";
+  }
+
+  var lockSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>';
+  var unlockSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"></rect><path d="M8 11V7a4 4 0 0 1 7.5-2"></path></svg>';
+
+  var reelsEl = $("#reels");
+  REELS.forEach(function (r, i) {
+    var col = document.createElement("div");
+    col.style.cssText = "display:flex;flex-direction:column;gap:12px;";
+    col.innerHTML =
+      '<div class="lbl blue" style="text-align:center;">' + r.label + "</div>" +
+      '<div class="reel-window">' +
+        '<div class="reel-cell" id="cell-' + i + '-0"></div>' +
+        '<div class="reel-cell mid" id="cell-' + i + '-1"></div>' +
+        '<div class="reel-cell" id="cell-' + i + '-2"></div>' +
+      "</div>" +
+      '<button type="button" class="lock-btn" id="lock-' + i + '"></button>';
+    reelsEl.appendChild(col);
+    $("#lock-" + i).addEventListener("click", function () {
+      locked[i] = !locked[i];
+      renderLocks();
+    });
+  });
+
+  function renderReel(i) {
+    var items = REELS[i].items, n = items.length, at = idx[i];
+    $("#cell-" + i + "-0").textContent = items[(at - 1 + n) % n];
+    $("#cell-" + i + "-1").textContent = items[at];
+    $("#cell-" + i + "-2").textContent = items[(at + 1) % n];
+  }
+
+  function renderLocks() {
+    for (var i = 0; i < 3; i++) {
+      var b = $("#lock-" + i);
+      b.className = "lock-btn" + (locked[i] ? " locked" : "");
+      b.innerHTML = (locked[i] ? lockSvg + " LOCKED" : unlockSvg + " UNLOCKED");
+    }
+  }
+
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function renderReadout() {
+    var who = REELS[0].items[idx[0]], pain = REELS[1].items[idx[1]], twist = REELS[2].items[idx[2]];
+    $("#readout").innerHTML =
+      "<b>" + cap(who.toLowerCase()) + "</b> " + pain.toLowerCase() +
+      ". You build the thing that ends it &mdash; <b>" + twist.toLowerCase() + "</b>.";
+    var no = 1000 + idx[0] * 256 + idx[1] * 16 + idx[2];
+    $("#combo-no").innerHTML = "Combo No. " + no + " &mdash; the readout";
+  }
+
+  function spinReels(which) {
+    if (spinning || which.length === 0) { return; }
+    spinning = true;
+    var done = 0;
+    which.forEach(function (i, order) {
+      var ticks = 10 + order * 5 + Math.floor(Math.random() * 5);
+      var t = 0;
+      var timer = setInterval(function () {
+        idx[i] = Math.floor(Math.random() * REELS[i].items.length);
+        renderReel(i);
+        renderReadout();
+        t++;
+        if (t >= ticks) {
+          clearInterval(timer);
+          done++;
+          if (done === which.length) { spinning = false; }
+        }
+      }, 70);
+    });
+  }
+
+  $("#pull").addEventListener("click", function () {
+    var which = [];
+    for (var i = 0; i < 3; i++) { if (!locked[i]) { which.push(i); } }
+    spinReels(which);
+  });
+  $("#reroll").addEventListener("click", function () { spinReels([2]); });
+
+  $("#start-build").addEventListener("click", function () {
+    var who = REELS[0].items[idx[0]], pain = REELS[1].items[idx[1]], twist = REELS[2].items[idx[2]];
+    bsStore.set("bs_combo", {
+      who: who, pain: pain, twist: twist,
+      sentence: cap(who.toLowerCase()) + " " + pain.toLowerCase() + ". You build the thing that ends it — " + twist.toLowerCase() + "."
+    });
+  });
+
+  for (var i = 0; i < 3; i++) { renderReel(i); }
+  renderLocks();
+  renderReadout();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mission Intake — Build Something!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%23030c1a'/><path d='M5 7l6 5-6 5M13 17h6' stroke='%2396bee6' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#030c1a">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script src="data/builds.js"></script>
+<script src="js/app.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="logo" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#96bee6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 10 12 4 18"></polyline><line x1="12" y1="18" x2="20" y2="18"></line></svg>
+      <span class="logo-name">BUILD_SOMETHING!<span> //v1.5</span></span>
+    </a>
+    <nav class="topnav">
+      <a class="lbl here" href="intake.html">Mission Intake</a>
+      <a class="lbl" href="machine.html">Just spin instead</a>
+      <a class="lbl" href="index.html">Abort to menu</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap intake-grid">
+    <div style="display:flex;flex-direction:column;gap:26px;min-width:0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <span class="lbl blue">Mission intake // the 90-second interview</span>
+        <span class="disp" style="font-size:14px;font-weight:600;letter-spacing:0.1em;color:var(--muted2);" id="q-counter">Q 01 / 06</span>
+      </div>
+      <div class="seg-row" id="q-segs"></div>
+
+      <h1 class="q-title" id="q-title"></h1>
+      <p class="q-help" id="q-help" style="margin:0;"></p>
+
+      <div id="q-area" style="display:flex;flex-direction:column;gap:18px;max-width:640px;"></div>
+
+      <div style="display:flex;align-items:center;gap:16px;max-width:640px;flex-wrap:wrap;">
+        <button class="btn btn-ghost" id="q-back" style="padding:15px 26px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"></polyline></svg>
+          Back
+        </button>
+        <button class="btn btn-primary" id="q-next" style="padding:16px 34px;">
+          Next
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+        <span class="note" style="margin-left:auto;">answers never leave this browser &middot; no accounts &middot; nothing to remember</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:18px;">
+      <div class="panel corners" style="padding:24px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span class="lbl blue">Subject dossier</span>
+          <span class="lbl">Compiling&hellip;</span>
+        </div>
+        <div style="height:1px;background:var(--line-dim);"></div>
+        <div style="display:flex;flex-direction:column;gap:13px;" id="dossier"></div>
+      </div>
+      <div style="border:1px solid var(--line);padding:18px 20px;">
+        <p class="note" style="margin:0;">The dossier becomes your kickoff prompt. The more real it is, the less generic your project gets. Nobody ever demoed a project about &ldquo;users.&rdquo;</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">maintained by Mr. C &middot; not an official Penn State anything &middot; your AI does the typing &mdash; you do the thinking</footer>
+
+<script>
+(function () {
+  var thisYear = new Date().getFullYear();
+  var YEARS = [];
+  for (var y = 0; y < 5; y++) { YEARS.push(String(thisYear + y)); }
+
+  var TIME_OPTS = ["WORK A JOB", "PLAY A SPORT", "GAMING", "MAKE MUSIC", "GYM RAT", "SIDE HUSTLE", "CHRONICALLY ONLINE", "CLUBS"];
+  var WHO_OPTS = ["JUST ME", "MY FRIENDS / TEAM", "MY JOB", "CAMPUS", "ANYONE ONLINE"];
+  var WINDOW_OPTS = ["ONE NIGHT", "ONE WEEK", "ONE MONTH"];
+
+  var STEPS = [
+    { title: "First — the basics.", help: "Major and year. No name, no email, no accounts. This all stays in your browser." },
+    { title: "What eats your time when you're not in class?", help: "Be specific. “I close at Sheetz most weekends” beats “I have a job.” Boring answers are the only way to fail this." },
+    { title: "What's genuinely annoying you lately?", help: "Small and petty is perfect. The best first projects are grudges." },
+    { title: "What do you track, collect, or argue about?", help: "Fantasy stats, gym PRs, vinyl, gas mileage, every movie you watch. Obsessions make great data." },
+    { title: "Who are you building for?", help: "Pick the honest one. “Just me” is a great answer." },
+    { title: "How much time you got?", help: "This sets the scope, not the commitment. All three end with something live on the internet." }
+  ];
+
+  var ans = bsStore.get("bs_dossier") || { major: "", year: "", time: [], timeText: "", annoy: "", track: "", who: "", window: "" };
+  var step = 0;
+
+  var qTitle = $("#q-title"), qHelp = $("#q-help"), qArea = $("#q-area"),
+      qCounter = $("#q-counter"), qSegs = $("#q-segs"),
+      backBtn = $("#q-back"), nextBtn = $("#q-next");
+
+  function save() { bsStore.set("bs_dossier", ans); }
+
+  function chipEl(label, on, onclick) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip" + (on ? " on" : "");
+    if (on) {
+      b.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#96bee6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 10 18 19 7"></polyline></svg>';
+    }
+    b.appendChild(document.createTextNode(label));
+    b.addEventListener("click", onclick);
+    return b;
+  }
+
+  function textArea(value, placeholder, oninput) {
+    var t = document.createElement("textarea");
+    t.value = value || "";
+    t.placeholder = placeholder;
+    t.addEventListener("input", function () { oninput(t.value); save(); dossier(); });
+    return t;
+  }
+
+  function renderStep() {
+    var s = STEPS[step];
+    qTitle.textContent = s.title;
+    qHelp.textContent = s.help;
+    qCounter.textContent = "Q 0" + (step + 1) + " / 06";
+
+    qSegs.innerHTML = "";
+    for (var i = 0; i < 6; i++) {
+      var seg = document.createElement("div");
+      seg.className = "seg" + (i <= step ? " on" : "");
+      qSegs.appendChild(seg);
+    }
+
+    qArea.innerHTML = "";
+
+    if (step === 0) {
+      var maj = document.createElement("input");
+      maj.type = "text";
+      maj.value = ans.major;
+      maj.placeholder = "Your major (MIS, Marketing, Mech Eng…)";
+      maj.addEventListener("input", function () { ans.major = maj.value; save(); dossier(); });
+      qArea.appendChild(maj);
+      var lbl = document.createElement("div");
+      lbl.className = "lbl";
+      lbl.textContent = "Graduating…";
+      qArea.appendChild(lbl);
+      var chips = document.createElement("div");
+      chips.className = "chips";
+      YEARS.forEach(function (yr) {
+        chips.appendChild(chipEl(yr, ans.year === yr, function () { ans.year = (ans.year === yr ? "" : yr); save(); renderStep(); dossier(); }));
+      });
+      chips.appendChild(chipEl("LATER / OTHER", ans.year === "LATER / OTHER", function () { ans.year = (ans.year === "LATER / OTHER" ? "" : "LATER / OTHER"); save(); renderStep(); dossier(); }));
+      qArea.appendChild(chips);
+    }
+
+    if (step === 1) {
+      var chips2 = document.createElement("div");
+      chips2.className = "chips";
+      TIME_OPTS.forEach(function (opt) {
+        var on = ans.time.indexOf(opt) !== -1;
+        chips2.appendChild(chipEl(opt, on, function () {
+          var at = ans.time.indexOf(opt);
+          if (at === -1) { ans.time.push(opt); } else { ans.time.splice(at, 1); }
+          save(); renderStep(); dossier();
+        }));
+      });
+      qArea.appendChild(chips2);
+      var lbl2 = document.createElement("div");
+      lbl2.className = "lbl";
+      lbl2.textContent = "Say it in your own words";
+      qArea.appendChild(lbl2);
+      qArea.appendChild(textArea(ans.timeText, "e.g. I close at Sheetz most weekends and play intramural volleyball. Our team group chat is pure chaos…", function (v) { ans.timeText = v; }));
+    }
+
+    if (step === 2) {
+      qArea.appendChild(textArea(ans.annoy, "e.g. our group chat takes 45 minutes to pick a restaurant / shift swaps at work are chaos / I keep missing due dates…", function (v) { ans.annoy = v; }));
+    }
+
+    if (step === 3) {
+      qArea.appendChild(textArea(ans.track, "e.g. my lifting numbers, our league standings, every movie I watch, how much I spend on energy drinks…", function (v) { ans.track = v; }));
+    }
+
+    if (step === 4) {
+      var chips4 = document.createElement("div");
+      chips4.className = "chips";
+      WHO_OPTS.forEach(function (opt) {
+        chips4.appendChild(chipEl(opt, ans.who === opt, function () { ans.who = (ans.who === opt ? "" : opt); save(); renderStep(); dossier(); }));
+      });
+      qArea.appendChild(chips4);
+    }
+
+    if (step === 5) {
+      var chips5 = document.createElement("div");
+      chips5.className = "chips";
+      WINDOW_OPTS.forEach(function (opt) {
+        chips5.appendChild(chipEl(opt, ans.window === opt, function () { ans.window = (ans.window === opt ? "" : opt); save(); renderStep(); dossier(); }));
+      });
+      qArea.appendChild(chips5);
+    }
+
+    backBtn.style.visibility = step === 0 ? "hidden" : "visible";
+    nextBtn.childNodes[0].nodeValue = "";
+    nextBtn.innerHTML = (step === 5 ? "Generate my brief" : "Next") +
+      ' <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>';
+  }
+
+  function row(key, val, pendingText) {
+    var has = val && String(val).trim().length > 0;
+    return '<div class="dossier-row"><span class="k">' + key + '</span><span class="v' + (has ? "" : " pending") + '">' +
+      (has ? escapeHtml(String(val)) : pendingText) + "</span></div>";
+  }
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function dossier() {
+    var majorLine = ans.major ? ans.major + (ans.year ? " · class of " + ans.year : "") : (ans.year ? "class of " + ans.year : "");
+    var doesLine = ans.time.join(", ").toLowerCase() + (ans.timeText ? (ans.time.length ? " — " : "") + ans.timeText : "");
+    $("#dossier").innerHTML =
+      row("MAJOR", majorLine, "awaiting Q1…") +
+      row("DOES", doesLine, "awaiting Q2…") +
+      row("ANNOYED BY", ans.annoy, "awaiting Q3…") +
+      row("TRACKS", ans.track, "awaiting Q4…") +
+      row("BUILDING FOR", ans.who, "awaiting Q5…") +
+      row("WINDOW", ans.window, "awaiting Q6…");
+  }
+
+  backBtn.addEventListener("click", function () { if (step > 0) { step--; renderStep(); } });
+  nextBtn.addEventListener("click", function () {
+    if (step < 5) { step++; renderStep(); }
+    else { save(); location.href = "prompt.html"; }
+  });
+
+  renderStep();
+  dossier();
+})();
+</script>
+</body>
+</html>

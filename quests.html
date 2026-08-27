@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quest Log — Build Something!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%23030c1a'/><path d='M5 7l6 5-6 5M13 17h6' stroke='%2396bee6' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#030c1a">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script src="data/builds.js"></script>
+<script src="js/app.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="logo" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#96bee6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 10 12 4 18"></polyline><line x1="12" y1="18" x2="20" y2="18"></line></svg>
+      <span class="logo-name">BUILD_SOMETHING!<span> //v1.5</span></span>
+    </a>
+    <nav class="topnav">
+      <a class="lbl here" href="quests.html">Quest log</a>
+      <a class="lbl" href="prompt.html">Mission brief</a>
+      <a class="lbl" href="board.html">The Board</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;">
+    <div class="page-head">
+      <div class="lbl blue" id="op-label">Quest log // operation: your build</div>
+      <h1>SIX QUESTS. ONE SHIPPED APP.</h1>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;padding-top:20px;">
+      <span style="display:flex;align-items:baseline;gap:10px;"><span class="lbl">Progress</span><b class="disp" style="font-size:26px;font-weight:700;color:var(--blue);" id="progress-num">0/6</b></span>
+      <div style="display:flex;gap:6px;" id="progress-segs"></div>
+    </div>
+  </div>
+
+  <div class="wrap quest-grid">
+    <div id="quest-list"></div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="corners amber" style="background:rgba(255,176,58,0.05);border:1px solid var(--amber-line);padding:26px;display:flex;flex-direction:column;gap:16px;">
+        <span class="lbl amber">When it all goes wrong</span>
+        <button class="btn btn-amber" id="panic" style="padding:22px;font-size:17px;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 4 14 11 14 10 22 20 9 13 9"></polygon></svg>
+          I'M STUCK
+        </button>
+        <p style="margin:0;font-size:12.5px;line-height:1.7;color:var(--amber-ink);">Smash it. It writes you a rescue prompt that makes your AI stop guessing louder and actually diagnose: what changed, what the error says, what you already tried.</p>
+        <span class="lbl" style="color:var(--amber-faint);">Works mid-panic &middot; designed for 1 a.m.</span>
+      </div>
+
+      <div class="panel" id="debrief-panel" style="padding:22px;display:flex;flex-direction:column;gap:12px;">
+        <span class="lbl blue" id="debrief-lbl">After you ship</span>
+        <p class="note" style="margin:0;">Resume bullets, a LinkedIn post, and a 90-second demo script &mdash; interviewed out of you by your AI. Best at 6/6. Allowed anytime.</p>
+        <a class="btn btn-ghost" href="debrief.html" id="debrief-cta" style="padding:13px 20px;font-size:12px;">The Debrief</a>
+      </div>
+
+      <div style="border:1px solid var(--line);padding:20px 22px;display:flex;flex-direction:column;gap:10px;">
+        <span class="lbl">Save file</span>
+        <p class="note" style="margin:0;">Progress lives in this browser only. Clear your cookies, lose your save &mdash; just like the old days. The Board is the only permanent record.</p>
+        <a href="#" class="note" id="clear-save" style="color:var(--faint);text-decoration:underline;">clear save file</a>
+      </div>
+
+      <div style="border:1px solid var(--line);padding:20px 22px;display:flex;flex-direction:column;gap:10px;">
+        <span class="lbl">Rule of thumb</span>
+        <p class="note" style="margin:0;">Stuck for 20 minutes? That's a feature of building, not proof you can't. Everyone on the Board got stuck. They just didn't stay stuck.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-back" id="panic-modal">
+    <div class="modal corners amber">
+      <div class="terminal-bar" style="border-bottom:1px solid var(--amber-line);">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span class="term-dots"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot" style="background:var(--amber);"></span></span>
+          <span class="lbl amber">RESCUE_PROMPT.TXT</span>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-amber" style="padding:11px 22px;font-size:12px;animation:none;" id="copy-rescue">Copy</button>
+          <button class="btn btn-ghost" style="padding:11px 18px;font-size:12px;" id="close-panic">Close</button>
+        </div>
+      </div>
+      <pre id="rescue-text" style="margin:0;padding:24px 28px;font-family:inherit;font-size:13px;line-height:1.8;color:#e8d5b0;white-space:pre-wrap;"></pre>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">maintained by Mr. C &middot; not an official Penn State anything &middot; your AI does the typing &mdash; you do the thinking</footer>
+
+<script>
+(function () {
+  var QUESTS = [
+    { name: "01 · LOCK THE IDEA", desc: "One sentence. If you can't say it, you can't build it. Name the project below so the log knows what we're calling this thing.", input: "name" },
+    { name: "02 · FIRST DEPLOY", desc: "One page with your project's name on it, live on the internet. Ugly beats invisible. Paste the URL — this is the moment it becomes real.", input: "url" },
+    { name: "03 · FEATURE TWO", desc: "The one thing that makes it yours. Ask your AI to plan it before it types anything." },
+    { name: "04 · A README THAT TELLS THE STORY", desc: "Why you built it, how, what's next. Recruiters actually read this part. Ask your AI to interview you for it." },
+    { name: "05 · GET ON THE BOARD", desc: "A real pull request to the Build Board. Your AI drives; you learn what a PR is.", link: { href: "board.html#join", label: "board instructions" } },
+    { name: "06 · DEMO IT", desc: "Email Mr. C — subject: I BUILT SOMETHING. Bring the live URL, not a slideshow.", mail: true }
+  ];
+
+  var done = bsStore.get("bs_quests") || [false, false, false, false, false, false];
+  var projname = bsStore.get("bs_projname") || "";
+  var liveurl = bsStore.get("bs_liveurl") || "";
+
+  var checkSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#041e42" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 10 18 19 7"></polyline></svg>';
+  var extSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M20 4L10 14"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg>';
+
+  function activeIndex() {
+    for (var i = 0; i < 6; i++) { if (!done[i]) { return i; } }
+    return -1;
+  }
+
+  function mailtoHref() {
+    var body = "Project: " + (projname || "[name]") + "\nLive URL: " + (liveurl || "[https://...]") + "\n\nWhen can I demo it?";
+    return "mailto:" + SITE.email + "?subject=" + encodeURIComponent("I BUILT SOMETHING") + "&body=" + encodeURIComponent(body);
+  }
+
+  function render() {
+    var act = activeIndex();
+    var list = $("#quest-list");
+    list.innerHTML = "";
+    QUESTS.forEach(function (q, i) {
+      var state = done[i] ? "done" : (i === act ? "active" : "locked");
+      var wrap = document.createElement("div");
+      wrap.className = "quest " + state;
+
+      var rail = document.createElement("div");
+      rail.className = "quest-rail";
+      var marker = document.createElement("button");
+      marker.className = "quest-marker";
+      marker.title = done[i] ? "Mark not done" : "Mark done";
+      if (done[i]) { marker.innerHTML = checkSvg; }
+      else if (state === "active") { marker.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;background:var(--blue);display:block;"></span>'; }
+      marker.addEventListener("click", function () {
+        done[i] = !done[i];
+        bsStore.set("bs_quests", done);
+        render();
+      });
+      rail.appendChild(marker);
+      if (i < 5) { var ln = document.createElement("div"); ln.className = "quest-line"; rail.appendChild(ln); }
+      wrap.appendChild(rail);
+
+      var body = document.createElement("div");
+      body.className = "quest-body";
+      var tag = done[i] ? "Complete" : (state === "active" ? "In progress" : "Locked");
+      body.innerHTML =
+        '<div class="quest-title-row"><span class="quest-name">' + q.name + '</span><span class="lbl quest-tag">' + tag + "</span></div>" +
+        '<p class="quest-desc" style="margin:0;">' + q.desc + "</p>";
+
+      if (q.input === "name") {
+        var nameIn = document.createElement("input");
+        nameIn.type = "text";
+        nameIn.value = projname;
+        nameIn.placeholder = "Project name (you can rename it later — everyone does)";
+        nameIn.style.maxWidth = "420px";
+        nameIn.addEventListener("change", function () {
+          projname = nameIn.value.trim();
+          bsStore.set("bs_projname", projname);
+          opLabel();
+        });
+        body.appendChild(nameIn);
+      }
+      if (q.input === "url") {
+        var urlIn = document.createElement("input");
+        urlIn.type = "url";
+        urlIn.value = liveurl;
+        urlIn.placeholder = "https://your-project.vercel.app";
+        urlIn.style.maxWidth = "420px";
+        urlIn.addEventListener("change", function () {
+          liveurl = urlIn.value.trim();
+          bsStore.set("bs_liveurl", liveurl);
+          render();
+        });
+        body.appendChild(urlIn);
+        if (liveurl) {
+          var live = document.createElement("a");
+          live.href = liveurl;
+          live.target = "_blank";
+          live.rel = "noopener";
+          live.style.cssText = "display:inline-flex;align-items:center;gap:8px;font-size:12.5px;margin-top:6px;";
+          live.innerHTML = extSvg + " " + liveurl.replace(/^https?:\/\//, "");
+          body.appendChild(live);
+        }
+      }
+      if (q.link) {
+        var a = document.createElement("a");
+        a.href = q.link.href;
+        a.style.cssText = "font-size:12.5px;";
+        a.textContent = "▸ " + q.link.label;
+        body.appendChild(a);
+      }
+      if (q.mail) {
+        var m = document.createElement("a");
+        m.href = mailtoHref();
+        m.style.cssText = "font-size:12.5px;";
+        m.textContent = "▸ email " + SITE.email;
+        body.appendChild(m);
+      }
+      wrap.appendChild(body);
+      list.appendChild(wrap);
+    });
+
+    var n = done.filter(Boolean).length;
+    $("#progress-num").textContent = n + "/6";
+    if (n === 6) {
+      $("#debrief-cta").className = "btn btn-primary";
+      $("#debrief-lbl").textContent = "Final unlock — ready";
+      $("#debrief-panel").classList.add("corners");
+    } else {
+      $("#debrief-cta").className = "btn btn-ghost";
+      $("#debrief-lbl").textContent = "After you ship";
+      $("#debrief-panel").classList.remove("corners");
+    }
+    var segs = $("#progress-segs");
+    segs.innerHTML = "";
+    for (var s = 0; s < 6; s++) {
+      var seg = document.createElement("div");
+      seg.style.cssText = "width:44px;height:6px;background:" + (done[s] ? "var(--blue)" : (s === act ? "rgba(150,190,230,0.28)" : "#0e2440")) + ";";
+      segs.appendChild(seg);
+    }
+    opLabel();
+  }
+
+  function opLabel() {
+    $("#op-label").textContent = "Quest log // operation: " + (projname || "your build");
+  }
+
+  var RESCUE = [
+    "MAYDAY. I'm stuck and you're going to get me unstuck WITHOUT guessing.",
+    "",
+    "THE SITUATION: [what I was trying to do]",
+    "WHAT I SEE: [paste the exact error, or describe the wrong behavior]",
+    "WHAT I ALREADY TRIED: [list it, even the dumb stuff]",
+    "",
+    "YOUR JOB:",
+    "1. Restate the problem back to me in plain English.",
+    "2. List the three most likely causes, ranked.",
+    "3. Check them one at a time, cheapest first — show me how to verify each.",
+    "4. No new code until we know the cause. Diagnose, then fix.",
+    "5. When it's fixed, explain what happened in one paragraph I could repeat to a friend.",
+    "",
+    "RULE: if you're not sure, say so and check — do not guess louder."
+  ].join("\n");
+
+  $("#rescue-text").textContent = RESCUE;
+  $("#panic").addEventListener("click", function () { $("#panic-modal").classList.add("open"); });
+  $("#close-panic").addEventListener("click", function () { $("#panic-modal").classList.remove("open"); });
+  $("#panic-modal").addEventListener("click", function (e) { if (e.target === this) { this.classList.remove("open"); } });
+  $("#copy-rescue").addEventListener("click", function () { bsCopy(this, RESCUE); });
+
+  $("#clear-save").addEventListener("click", function (e) {
+    e.preventDefault();
+    if (confirm("Delete your save file? Dossier, quests, everything. No respawns.")) {
+      ["bs_quests", "bs_dossier", "bs_combo", "bs_projname", "bs_liveurl"].forEach(bsStore.del);
+      location.reload();
+    }
+  });
+
+  var act = activeIndex();
+  render();
+})();
+</script>
+</body>
+</html>

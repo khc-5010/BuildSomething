@@ -1,0 +1,6 @@
+# seeded design-canvas payload (~2 MB, regenerable from design/*.dc.html)
+design/build-something.html
+
+# OS junk
+Thumbs.db
+.DS_Store

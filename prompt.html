@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Kickoff Prompt — Build Something!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%23030c1a'/><path d='M5 7l6 5-6 5M13 17h6' stroke='%2396bee6' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#030c1a">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script src="data/builds.js"></script>
+<script src="js/app.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="logo" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#96bee6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 10 12 4 18"></polyline><line x1="12" y1="18" x2="20" y2="18"></line></svg>
+      <span class="logo-name">BUILD_SOMETHING!<span> //v1.5</span></span>
+    </a>
+    <nav class="topnav">
+      <a class="lbl here" href="prompt.html">Mission brief</a>
+      <a class="lbl" href="quests.html">Quest Log</a>
+      <a class="lbl" href="index.html">Abort to menu</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="max-width:1100px;display:flex;flex-direction:column;gap:30px;padding-top:44px;">
+
+    <div style="display:flex;align-items:center;gap:20px;">
+      <div style="width:52px;height:52px;border:2px solid var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(150,190,230,0.3);flex-shrink:0;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#96bee6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 13 10 18 19 7"></polyline></svg>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <h1 class="disp" style="margin:0;font-size:clamp(24px,4vw,32px);font-weight:700;color:var(--bright);letter-spacing:0.02em;">MISSION BRIEF GENERATED</h1>
+        <p class="page-sub" style="margin:0;" id="brief-sub">One copy-paste stands between you and a live URL.</p>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step panel">
+        <span class="step-name">01 / OPEN YOUR AI CODING TOOL</span>
+        <span class="step-desc">Claude Code, Codex, Cursor &mdash; whatever's current when you read this. Don't have one? Hit <a href="setup.html">Get Set Up</a> first.</span>
+      </div>
+      <div class="step panel">
+        <span class="step-name">02 / PASTE THE WHOLE THING</span>
+        <span class="step-desc">All of it. This prompt turns your AI into a mentor, not a vending machine.</span>
+      </div>
+      <div class="step panel">
+        <span class="step-name">03 / DO WHAT IT SAYS</span>
+        <span class="step-desc">You'll have something live on the internet tonight. Yes, tonight.</span>
+      </div>
+    </div>
+
+    <div class="terminal corners">
+      <div class="terminal-bar">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span class="term-dots"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot on"></span></span>
+          <span class="lbl" id="prompt-label">KICKOFF_PROMPT.TXT</span>
+        </div>
+        <button class="btn btn-primary" style="padding:11px 22px;font-size:12px;" id="copy-prompt">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1"></rect><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"></path></svg>
+          Copy
+        </button>
+      </div>
+      <pre id="prompt-text"></pre>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <p class="note" style="margin:0;max-width:560px;">Works in any AI coding tool &mdash; today's or whatever replaces it. The prompt is the technology. Lose it? Come back in this browser &mdash; your dossier's still here.</p>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <a class="btn btn-ghost" href="intake.html" style="padding:15px 22px;">Redo the intake</a>
+        <a class="btn btn-ghost" href="machine.html" style="padding:15px 22px;">Spin instead</a>
+        <a class="btn btn-primary" href="quests.html">
+          Open the quest log
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">maintained by Mr. C &middot; not an official Penn State anything &middot; your AI does the typing &mdash; you do the thinking</footer>
+
+<script>
+(function () {
+  var d = bsStore.get("bs_dossier");
+  var c = bsStore.get("bs_combo");
+
+  function filled(v) { return v && String(v).trim().length > 0; }
+  function dossierHasAnything() {
+    if (!d) { return false; }
+    return filled(d.major) || filled(d.year) || (d.time && d.time.length) || filled(d.timeText) ||
+           filled(d.annoy) || filled(d.track) || filled(d.who) || filled(d.window);
+  }
+
+  function buildPrompt() {
+    var L = [];
+    L.push("YOU ARE MY PROJECT MENTOR — not a vending machine, not a genie. I'm a Penn State Behrend student. Assume zero coding experience unless I say otherwise. We're building my first real project, together, starting now.");
+    L.push("");
+    if (c) {
+      L.push("THE PROJECT (from an idea generator — sanity-check it, then make it better):");
+      L.push(c.sentence);
+    } else {
+      L.push("FIRST TASK — THE IDEA:");
+      L.push("Pitch me exactly three project ideas built from my dossier below" + (d && filled(d.window) ? ", sized to my time window" : "") + ". One safe, one interesting, one weird. Make me pick one before you write a single line of code.");
+    }
+    L.push("");
+    L.push("MY DOSSIER (use it — it's the whole point):");
+    if (dossierHasAnything()) {
+      if (filled(d.major) || filled(d.year)) {
+        L.push("· " + (filled(d.major) ? d.major : "Student") + (filled(d.year) ? ", graduating " + d.year : ""));
+      }
+      if ((d.time && d.time.length) || filled(d.timeText)) {
+        var doesBits = [];
+        if (d.time && d.time.length) { doesBits.push(d.time.join(", ").toLowerCase()); }
+        if (filled(d.timeText)) { doesBits.push(d.timeText.trim()); }
+        L.push("· Outside class: " + doesBits.join(" — "));
+      }
+      if (filled(d.annoy)) { L.push("· Currently annoyed by: " + d.annoy.trim()); }
+      if (filled(d.track)) { L.push("· Tracks / argues about: " + d.track.trim()); }
+      if (filled(d.who)) { L.push("· Building for: " + d.who.toLowerCase()); }
+      if (filled(d.window)) { L.push("· Time window: " + d.window.toLowerCase()); }
+    } else {
+      L.push("· I skipped the intake. Interview me first: five quick questions about my job, hobbies, and what annoys me — one at a time — then use my answers everywhere.");
+    }
+    L.push("");
+    L.push("THE RULES:");
+    L.push("01. Version 1 is ONE PAGE and it goes LIVE ON THE INTERNET before we stop today. Ugly is allowed. Not-deployed is not.");
+    L.push("02. Teach as we go — one concept at a time, plain English, and quiz me before big moves.");
+    L.push("03. Stop me when I'm overbuilding. Say \"that's a v2 idea\" and keep us moving.");
+    L.push("04. When something breaks, make me read the error out loud before you fix it.");
+    L.push("05. Every session ends with a deploy, even a tiny one.");
+    L.push("06. No jargon without a one-line translation.");
+    L.push("07. Make me type some of it myself — don't let me just watch.");
+    L.push("08. Use git and GitHub from the start — and if I don't have a GitHub account yet, pause and walk me through making one. You run the commands; I'll ask when I'm curious.");
+    L.push("09. Big choices get two options max, plus your recommendation.");
+    L.push("10. When v1 is live, walk me through a README that tells the story — then help me get on the Build Board.");
+    L.push("");
+    L.push("THE DEPLOY CHECKLIST (end of session one):");
+    L.push("· the project's name is on a real page");
+    L.push("· that page is live at a public URL");
+    L.push("· the URL loads on my phone");
+    L.push("· I saved the link in my quest log");
+    L.push("");
+    L.push("START: your first message back to me is the plan for tonight in five bullets. Then we go.");
+    return L.join("\n");
+  }
+
+  if (!c && !dossierHasAnything()) {
+    $("#brief-sub").textContent = "No intake, no spin — bold. This version makes your AI do the interviewing.";
+    $("#prompt-label").textContent = "KICKOFF_PROMPT.TXT · blank loadout";
+  } else if (c) {
+    $("#prompt-label").textContent = "KICKOFF_PROMPT.TXT · idea locked" + (dossierHasAnything() ? " + dossier attached" : "");
+  } else {
+    $("#prompt-label").textContent = "KICKOFF_PROMPT.TXT · personalized from your dossier";
+  }
+
+  var text = buildPrompt();
+  $("#prompt-text").textContent = text;
+  $("#copy-prompt").addEventListener("click", function () { bsCopy(this, text); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "01 · Landing", "x": 0, "y": 0, "w": 1440, "h": 1100 },
+    { "file": "Intake.dc.html", "title": "02 · Mission Intake", "x": 1560, "y": 0, "w": 1440, "h": 920 },
+    { "file": "IdeaMachine.dc.html", "title": "03 · The Idea Machine", "x": 3120, "y": 0, "w": 1440, "h": 980 },
+    { "file": "KickoffPrompt.dc.html", "title": "04 · Kickoff Prompt", "x": 4680, "y": 0, "w": 1440, "h": 1140 },
+    { "file": "QuestLog.dc.html", "title": "05 · Quest Log", "x": 0, "y": 1300, "w": 1440, "h": 1220 },
+    { "file": "BuildBoard.dc.html", "title": "06 · The Build Board", "x": 1560, "y": 1300, "w": 1440, "h": 1280 },
+    { "file": "GetSetUp.dc.html", "title": "07 · Get Set Up", "x": 3120, "y": 1300, "w": 1440, "h": 1200 }
+  ],
+  "annotations": [
+    { "id": "direction-note", "x": 0, "y": -230, "w": 540, "text": "BUILD SOMETHING! — v1 screen set\nDirection: dark phosphor mission-control in Penn State colors — Nittany-navy ground, Pugh-blue #96BEE6 phosphor, amber #FFB03A alerts. Chakra Petch + IBM Plex Mono.\nTop row is the funnel: land → intake → spin → kickoff prompt. Bottom row: quest log, build board, get set up.\nAll stats, student names, and projects are sample data — one persona (Sheetz + intramural volleyball) runs through the whole funnel so the screens tell a single story." }
+  ],
+  "launch": { "view": "canvas" }
+}

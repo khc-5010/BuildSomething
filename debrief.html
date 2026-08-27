@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Debrief — Build Something!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%23030c1a'/><path d='M5 7l6 5-6 5M13 17h6' stroke='%2396bee6' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#030c1a">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script src="data/builds.js"></script>
+<script src="js/app.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="logo" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#96bee6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 10 12 4 18"></polyline><line x1="12" y1="18" x2="20" y2="18"></line></svg>
+      <span class="logo-name">BUILD_SOMETHING!<span> //v1.5</span></span>
+    </a>
+    <nav class="topnav">
+      <a class="lbl here" href="debrief.html">The Debrief</a>
+      <a class="lbl" href="quests.html">Quest Log</a>
+      <a class="lbl" href="board.html">The Board</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="max-width:1100px;display:flex;flex-direction:column;gap:30px;padding-top:44px;">
+
+    <div class="page-head" style="padding-top:0;">
+      <div class="lbl blue">The debrief // after you ship</div>
+      <h1>TURN THE BUILD INTO AMMO.</h1>
+      <p class="page-sub" style="margin:0;">You built it. Now make it say so on paper. This prompt makes your AI interview you, then write the resume bullets, the LinkedIn post, and the 90-second demo script &mdash; out of your own answers, in your own voice.</p>
+    </div>
+
+    <div class="terminal corners">
+      <div class="terminal-bar">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span class="term-dots"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot on"></span></span>
+          <span class="lbl" id="debrief-label">DEBRIEF_PROMPT.TXT</span>
+        </div>
+        <button class="btn btn-primary" style="padding:11px 22px;font-size:12px;" id="copy-debrief">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1"></rect><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"></path></svg>
+          Copy
+        </button>
+      </div>
+      <pre id="debrief-text"></pre>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <p class="note" style="margin:0;max-width:560px;">Best after all six quests. Recruiters don't hire the project &mdash; they hire the person who can talk about it. This is where you learn to talk about it.</p>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <a class="btn btn-ghost" href="quests.html" style="padding:15px 22px;">Back to quest log</a>
+        <a class="btn btn-primary" href="board.html#join">
+          Get on the board
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">maintained by Mr. C &middot; not an official Penn State anything &middot; your AI does the typing &mdash; you do the thinking</footer>
+
+<script>
+(function () {
+  var d = bsStore.get("bs_dossier") || {};
+  var projname = bsStore.get("bs_projname") || "";
+  var liveurl = bsStore.get("bs_liveurl") || "";
+
+  function buildDebrief() {
+    var L = [];
+    L.push("THE BUILD IS DONE. Now we turn it into interview ammunition.");
+    L.push("");
+    L.push("THE PROJECT: " + (projname || "[project name]") + (liveurl ? " — live at " + liveurl : " — live at [your URL]"));
+    var whoBits = [];
+    if (d.major && d.major.trim()) { whoBits.push(d.major.trim()); }
+    if (d.year && d.year.trim()) { whoBits.push("graduating " + d.year.trim()); }
+    L.push("WHO I AM: Penn State Behrend student" + (whoBits.length ? ", " + whoBits.join(", ") : "") + ". This was my first real build.");
+    L.push("");
+    L.push("STEP ONE — INTERVIEW ME. One question at a time, these six:");
+    L.push("· why I built it (the real story, not the polished one)");
+    L.push("· the hardest thing that broke, and how we fixed it");
+    L.push("· what I'd build next if I had another month");
+    L.push("· what I actually learned about building");
+    L.push("· any real numbers (days it took, features cut, people who've used it)");
+    L.push("· what surprised me");
+    L.push("");
+    L.push("STEP TWO — USING MY ANSWERS AND MY WORDS, WRITE:");
+    L.push("· three resume bullets — action verb, what I built, one specific detail each; zero fluff words");
+    L.push("· a LinkedIn post — short, human, zero cringe, ends with the live link");
+    L.push("· a 90-second demo script — the hook, the live walkthrough, the \"what's next\" close");
+    L.push("· one tight paragraph answering \"tell me about a project you're proud of\"");
+    L.push("");
+    L.push("THE RULES: my voice, not corporate voice. Specific beats impressive. If an answer I give is vague, push back until it's concrete. Nothing goes in that didn't come from me.");
+    return L.join("\n");
+  }
+
+  if (projname) { $("#debrief-label").textContent = "DEBRIEF_PROMPT.TXT · " + projname.toUpperCase(); }
+  var text = buildDebrief();
+  $("#debrief-text").textContent = text;
+  $("#copy-debrief").addEventListener("click", function () { bsCopy(this, text); });
+})();
+</script>
+</body>
+</html>

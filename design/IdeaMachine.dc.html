@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #030c1a; font-family: 'IBM Plex Mono', Consolas, 'Courier New', monospace; color: #dce8f5; }
+    a { color: #96bee6; text-decoration: none; }
+    a:hover { color: #c9e2fa; }
+    .disp { font-family: 'Chakra Petch', 'Segoe UI', Arial, sans-serif; }
+    .lbl { font-family: 'Chakra Petch', 'Segoe UI', Arial, sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #6d84a3; }
+    .dotgrid { background-image: radial-gradient(rgba(150,190,230,0.055) 1px, transparent 1.4px); background-size: 26px 26px; }
+    .corners { position: relative; }
+    .corners::before { content: ""; position: absolute; top: -1px; left: -1px; width: 16px; height: 16px; border-top: 2px solid #96bee6; border-left: 2px solid #96bee6; }
+    .corners::after { content: ""; position: absolute; bottom: -1px; right: -1px; width: 16px; height: 16px; border-bottom: 2px solid #96bee6; border-right: 2px solid #96bee6; }
+    .btn { font-family: 'Chakra Petch', 'Segoe UI', Arial, sans-serif; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px; clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px); }
+  </style>
+</helmet>
+<div class="dotgrid" style="position:relative;width:1440px;height:980px;background-color:#030c1a;overflow:hidden;display:flex;flex-direction:column;box-sizing:border-box;">
+  <div style="position:absolute;top:-200px;left:260px;width:920px;height:560px;background:radial-gradient(closest-side, rgba(150,190,230,0.11), rgba(150,190,230,0));pointer-events:none;"></div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid #0c1f36;position:relative;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#96bee6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 10 12 4 18"></polyline><line x1="12" y1="18" x2="20" y2="18"></line></svg>
+      <div class="disp" style="font-size:16px;font-weight:700;letter-spacing:0.08em;color:#f0f7ff;">BUILD_SOMETHING!<span style="color:#96bee6;"> //v1</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:28px;">
+      <a class="lbl" href="#" style="color:#96bee6;">The Idea Machine</a>
+      <a class="lbl" href="#" style="color:#9db3c9;">Do the intake instead</a>
+      <a class="lbl" href="#" style="color:#9db3c9;">Abort to menu</a>
+    </div>
+  </div>
+
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding:40px 60px 0 60px;">
+    <div class="lbl" style="color:#96bee6;">The Idea Machine // no thoughts required</div>
+    <div class="disp" style="font-size:34px;font-weight:700;color:#f0f7ff;letter-spacing:0.02em;">PULL. LOCK WHAT YOU LIKE. SPIN THE REST.</div>
+  </div>
+
+  <div class="corners" style="position:relative;width:1120px;margin:30px auto 0 auto;background:#06152b;border:1px solid #14304f;padding:30px;box-sizing:border-box;">
+    <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:20px;">
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="lbl" style="text-align:center;color:#96bee6;">Who</div>
+        <div style="position:relative;border:1px solid #14304f;background:#041020;overflow:hidden;">
+          <div style="padding:16px 14px;text-align:center;font-size:13px;color:#3d5375;letter-spacing:0.04em;">YOUR GROUP CHAT</div>
+          <div class="disp" style="padding:20px 14px;text-align:center;font-size:19px;font-weight:600;color:#f0f7ff;background:rgba(150,190,230,0.09);border-top:1px solid #96bee6;border-bottom:1px solid #96bee6;">YOUR INTRAMURAL TEAM</div>
+          <div style="padding:16px 14px;text-align:center;font-size:13px;color:#3d5375;letter-spacing:0.04em;">EVERY ERIE DRIVER</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:rgba(255,176,58,0.1);border:1px solid #6b4a17;color:#ffb03a;font-size:11px;letter-spacing:0.18em;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          LOCKED
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="lbl" style="text-align:center;color:#96bee6;">The pain</div>
+        <div style="position:relative;border:1px solid #14304f;background:#041020;overflow:hidden;">
+          <div style="padding:16px 14px;text-align:center;font-size:13px;color:#3d5375;letter-spacing:0.04em;">FORGETS EVERYTHING</div>
+          <div class="disp" style="padding:20px 14px;text-align:center;font-size:19px;font-weight:600;color:#f0f7ff;background:rgba(150,190,230,0.09);border-top:1px solid #96bee6;border-bottom:1px solid #96bee6;">CAN'T PICK WHERE TO EAT</div>
+          <div style="padding:16px 14px;text-align:center;font-size:13px;color:#3d5375;letter-spacing:0.04em;">ARGUES ABOUT NOTHING</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid #14304f;color:#6d84a3;font-size:11px;letter-spacing:0.18em;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"></rect><path d="M8 11V7a4 4 0 0 1 7.5-2"></path></svg>
+          UNLOCKED
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="lbl" style="text-align:center;color:#96bee6;">The twist</div>
+        <div style="position:relative;border:1px solid #14304f;background:#041020;overflow:hidden;">
+          <div style="padding:16px 14px;text-align:center;font-size:13px;color:#3d5375;letter-spacing:0.04em;">WITH A LEADERBOARD</div>
+          <div class="disp" style="padding:20px 14px;text-align:center;font-size:19px;font-weight:600;color:#f0f7ff;background:rgba(150,190,230,0.09);border-top:1px solid #96bee6;border-bottom:1px solid #96bee6;">BRACKET-VOTE DEATHMATCH</div>
+          <div style="padding:16px 14px;text-align:center;font-size:13px;color:#3d5375;letter-spacing:0.04em;">AND IT TALKS TRASH</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid #14304f;color:#6d84a3;font-size:11px;letter-spacing:0.18em;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"></rect><path d="M8 11V7a4 4 0 0 1 7.5-2"></path></svg>
+          UNLOCKED
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;margin-top:26px;">
+      <div class="btn" style="padding:19px 66px;background:#96bee6;color:#041e42;font-size:15px;box-shadow:0 0 30px rgba(150,190,230,0.3);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"></path><polyline points="21 3 21 8 16 8"></polyline><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"></path><polyline points="3 21 3 16 8 16"></polyline></svg>
+        Pull the lever
+      </div>
+    </div>
+  </div>
+
+  <div style="position:relative;width:1120px;margin:22px auto 0 auto;border:1px solid #14304f;background:#06152b;padding:24px 28px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div class="lbl" style="color:#96bee6;">Combo No. 0847 &mdash; the readout</div>
+      <div class="lbl">Routes into your kickoff prompt</div>
+    </div>
+    <div style="font-size:15.5px;line-height:1.7;color:#dce8f5;max-width:900px;">Your intramural team can never pick where to eat &mdash; so you build <span class="disp" style="color:#96bee6;font-weight:600;">BRACKET BITES</span>: restaurants enter, the team votes head-to-head, one winner. Losers cope.</div>
+    <div style="display:flex;align-items:center;gap:14px;margin-top:6px;">
+      <div class="btn" style="padding:15px 30px;background:#96bee6;color:#041e42;font-size:13px;">
+        Start this build
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+      </div>
+      <div class="btn" style="padding:15px 26px;border:1px solid #14304f;color:#9db3c9;font-size:13px;background:transparent;">Reroll the twist</div>
+    </div>
+  </div>
+
+  <div style="position:relative;text-align:center;padding:24px 60px;font-size:12px;color:#52678a;margin-top:auto;">the machine is the fun part &mdash; the prompt is the payload. every pull gets personalized with whatever you told the intake.</div>
+</div>
+</x-dc>
+</body>
+</html>
