@@ -1,7 +1,7 @@
 /* Build Something! service worker — network-first so merged Board PRs show up
    immediately, with a cache fallback so the site still opens offline. */
 
-var CACHE = "bs-v1.5";
+var CACHE = "bs-v1.6";
 var PRECACHE = [
   "./",
   "./index.html",

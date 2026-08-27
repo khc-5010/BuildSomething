@@ -42,7 +42,7 @@ var BUILDS = [
     tool: "Claude Code",
     live: null,   // self entry — resolves to wherever the site is running
     code: null,   // self entry — resolves to SITE.repoUrl once it's set
-    shot: null,
+    shot: "shots/build-something.png",
     semester: "Fall '26",
     seed: true,
     self: true
@@ -58,7 +58,7 @@ var BUILDS = [
     tool: "Claude Code",
     live: "https://alum-line.vercel.app",
     code: null,
-    shot: null,
+    shot: "shots/alum-line.png",
     semester: null,
     seed: true,
     self: false
